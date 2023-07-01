@@ -1,0 +1,49 @@
+https://ap-northeast-2.console.aws.amazon.com/elasticbeanstalk/home?region=ap-northeast-2#/welcome
+접속 > 보안 자격증명 > 엑세스키 생성
+
+
+키 AKIAZKUI6R2I7PY2AIC5
+비밀 BLCaxKzXwYJ7MUF3amUXbuhnN+2kggdXq9aVE9nI
+
+
+- 터미널 준비하기 - 
+mkdir deploy
+cp app.py deploy/application.py
+cp -r templates deploy/templates
+pip freeze > deploy/requirements.txt
+cd deploy
+
+- appication.py 세팅하기 - 
+application = app = Flask(__name__)
+app.run()
+
+- 패키지 설치하기 - 
+pip install awsebcli
+
+- 보안 자격증명 - 
+eb init    
+서울은 10번인거 확인하고 10 엔터
+키 AKIAZKUI6R2IW5JCT4VI
+비밀 NDCnqRFOQNnRSDa79bMYaCzvn+Fep8QE2ACruML1
+엔터
+y 
+엔터
+y
+[ Create new Application ] 이거 번호 입력
+엔터
+엔터
+엔터
+
+
+- 초기 설정 - 
+eb create myweb
+
+- 코드 수정 & 업데이트 - 
+- deploy 폴더로 이동한 다음에 이 수정코드 입력하기 - 
+eb deploy myweb
+
+
+
+
+
+eb init --interactive
