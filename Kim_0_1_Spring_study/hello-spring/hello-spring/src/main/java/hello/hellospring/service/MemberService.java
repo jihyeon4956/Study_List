@@ -10,9 +10,12 @@ public class MemberService {
 
 
     // 회원서비스를 만들기 위한 repository 생성
-    private final MemberRepository memberRepository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository;
 
-    // memberRepository 를 변수로 선언 후 외부에서 만들어줌 (외부에서 넣어줌 -> DI)
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+// memberRepository 를 변수로 선언 후 외부에서 만들어줌 (외부에서 넣어줌 -> DI)
 //    public MemberService(MemberRepository memberRepository) {
 //        this.memberRepository = memberRepository;
 //    }
