@@ -7,4 +7,6 @@ public interface MemberRepository {
     Optional<Member> findById(Long id);  // 임의로 부여된 ID로 회원 찾기
     Optional<Member> findByName(String name);
     List<Member> findAll();     // 모든 회원 리스트를 반환한다
+
+    // Optional : null일 경우 감싸서 반환하는것
 }

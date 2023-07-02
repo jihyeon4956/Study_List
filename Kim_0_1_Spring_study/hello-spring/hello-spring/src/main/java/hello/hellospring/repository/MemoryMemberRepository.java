@@ -7,6 +7,7 @@ import java.util.*;
 
 public class MemoryMemberRepository implements MemberRepository {
 
+    // 저장용
     private static Map<Long, Member> store = new HashMap<>(); // 받아오는 값 적기
     private static long sequence = 0L;  // 시퀀스는 0,1,2... 값을 생성하는데 사용함
 
@@ -27,7 +28,7 @@ public class MemoryMemberRepository implements MemberRepository {
     public Optional<Member> findByName(String name) {
         return store.values().stream()
                 .filter(member -> member.getName().equals(name))
-                .findAny();
+                .findAny(); // 가장 처음꺼 찾는거
     }
 
     @Override
