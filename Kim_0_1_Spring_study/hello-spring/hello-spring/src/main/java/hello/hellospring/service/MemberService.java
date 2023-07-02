@@ -1,11 +1,12 @@
 package hello.hellospring.service;
 import hello.hellospring.domain.Member;
 import hello.hellospring.repository.MemberRepository;
-import hello.hellospring.repository.MemoryMemberRepository;
 
 import java.util.List;
 import java.util.Optional;
+
 public class MemberService {
+
 
 
     // 회원서비스를 만들기 위한 repository 생성
@@ -20,10 +21,20 @@ public class MemberService {
      * 회원가입
      */
     public Long join(Member member) {
-        validateDuplicateMember(member); //중복 회원 검증
+        Optional<Member> resurt = memberRepository.findByName(member.getName());
+        resurt.ifPresent(m -> {
+            throw new IllegalStateException("이미 존재하는 회원입니다.");
+        });
         memberRepository.save(member);
         return member.getId();   // 회원가입 하면 ID를 반환해주기로 함
     }
+
+
+//    public Long join(Member member) {
+//        validateDuplicateMember(member); //중복 회원 검증
+//        memberRepository.save(member);
+//        return member.getId();   // 회원가입 하면 ID를 반환해주기로 함
+//    }
     private void validateDuplicateMember(Member member) {
         memberRepository.findByName(member.getName())  // 저장소에서 이름을 찾아본다
                 .ifPresent(m -> {
