@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Flask/sparta/projects/02.mars" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Spring files/2_memo" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Spring files/Done/Board_Lv1" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Spring files/Done/Spring_3주차_시험" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Spring files/spring-auth" vcs="Git" />
+  </component>
+</project>
