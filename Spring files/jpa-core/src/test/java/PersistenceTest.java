@@ -71,7 +71,7 @@ public class PersistenceTest {
     }
 
 
-    // 1차 캐시에 값이 있는 경우
+    // 1차 캐시에 값이 있는 경우 - 곧바로 출력한다
     @Test
     @DisplayName("Entity 조회 : 캐시 저장소에 해당하는 Id가 존재하는 경우")
     void test3() {
@@ -207,9 +207,42 @@ public class PersistenceTest {
             em.persist(memo);
 
             System.out.println("flush() 전");
-            em.flush(); // flush() 직접 호출
+            em.flush(); // flush() 직접 호출 -> 여기서 select문이 날라갔음
             System.out.println("flush() 후\n");
 
+
+            System.out.println("트랜잭션 commit 전");
+            et.commit();
+            System.out.println("트랜잭션 commit 후");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            et.rollback();
+        } finally {
+            em.close();
+        }
+
+        emf.close();
+    }
+
+    // 변경 감지(Dirty Checking)
+    @Test
+    @DisplayName("변경 감지 확인")
+    void test8() {
+        EntityTransaction et = em.getTransaction();
+
+        et.begin();
+
+        try {
+            System.out.println("변경할 데이터를 조회합니다.");
+            Memo memo = em.find(Memo.class, 4);
+            System.out.println("memo.getId() = " + memo.getId());
+            System.out.println("memo.getUsername() = " + memo.getUsername());
+            System.out.println("memo.getContents() = " + memo.getContents());
+
+            System.out.println("\n수정을 진행합니다.");
+            memo.setUsername("Update");
+            memo.setContents("변경 감지 확인");
 
             System.out.println("트랜잭션 commit 전");
             et.commit();
