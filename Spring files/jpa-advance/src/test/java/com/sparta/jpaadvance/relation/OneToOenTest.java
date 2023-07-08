@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @Transactional
-public class OneToOen {
+public class OneToOenTest {
     @Autowired
     FoodRepository foodRepository;
     @Autowired
@@ -47,7 +47,7 @@ public class OneToOen {
         // 외래 키의 주인이 아닌 User 에서 Food 를 저장해보겠습니다.
         User user = new User();
         user.setName("Robbie");
-        user.setFood(food);
+//        user.setFood(food);
 
         userRepository.save(user);
         foodRepository.save(food);
@@ -67,7 +67,7 @@ public class OneToOen {
         // 외래 키(연관 관계) 설정 food.setUser(this); 추가
         User user = new User();
         user.setName("Robbie");
-        user.addFood(food);
+//        user.addFood(food);
 
         userRepository.save(user);
         foodRepository.save(food);
