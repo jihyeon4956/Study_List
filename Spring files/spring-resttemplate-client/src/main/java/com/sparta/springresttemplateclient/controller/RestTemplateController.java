@@ -1,5 +1,5 @@
 package com.sparta.springresttemplateclient.controller;
-package com.starta.springresttemplateclient
+
 import com.sparta.springresttemplateclient.dto.ItemDto;
 import com.sparta.springresttemplateclient.service.RestTemplateService;
 import org.springframework.web.bind.annotation.GetMapping;
