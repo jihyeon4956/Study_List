@@ -51,6 +51,7 @@ class Student implements Comparable {
     }
 } // class Student
 
+
 class Exercise11_6 {
     static int getGroupCount(TreeSet tset, int from, int to) {
         Student s1 = new Student("",0,0,from,from,from);
