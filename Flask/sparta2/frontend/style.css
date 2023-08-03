@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Gugi&family=Jua&family=Nanum+Brush+Script&display=swap');
+*{
+    /* font-family: 'Gugi', cursive; */
+    font-family: 'Jua', sans-serif;
+    /* font-family: 'Nanum Brush Script', cursive; */
+}
+.mytitle {
+    background-color: red;
+    width: 300px;
+    height: 200px;
+
+    border-radius: 10px;
+    color: white;
+
+    text-align: center;
+
+    padding-top: 30px;
+
+    /* 이미지 가운데 크기맞게 정렬 - 3줄*/
+    background-image: url('https://www.ancient-origins.net/sites/default/files/field/image/Agesilaus-II-cover.jpg');
+    background-size: cover;
+    background-position: center;
+}
+.wrap{
+    width: 300px;
+    margin: 0 auto 0 auto;
+}

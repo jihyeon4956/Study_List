@@ -40,7 +40,7 @@ class Student5 implements Comparable <Student5>{
     }
 }
 
-class Exercise11_5 {
+class Ex11_5 {
     public static void main(String[] args) {
         ArrayList<Student5>list = new ArrayList<Student5>();
         list.add(new Student5("홍길동", 1, 1, 100, 100, 100));
