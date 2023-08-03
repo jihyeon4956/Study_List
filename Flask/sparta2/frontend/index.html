@@ -1,4 +1,4 @@
-<!Doctype html>
+<!doctype html>
 <html lang="en">
 
 <head>
@@ -15,6 +15,8 @@
     <title>스파르타 피디아</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <script src="prac.js"></script>
+    <script src="mise.js"></script>
 
     <style>
         * {
@@ -85,16 +87,21 @@
         }
     </style>
     <script>
-        function hey() {
-            console.log('안녕하세요~~')
-        }
+        $(document).ready(function() {
+            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then(res => res.json()).then(data => {
+                    // console.log(data)
+                    let temp = data['temp']
+                    $('#temp').text(temp)
+                })
+        })
     </script>
 </head>
 
 <body>
 <div class="mytitle">
     <h1>내 생애 최고의 영화들</h1>
-    <button onclick="hey()">영화 기록하기</button>
+    <div>현재 서울의 날씨 : <span id="temp">20</span>도</div>
+    <button>영화 기록하기</button>
 </div>
 <div class="mypost">
     <div class="form-floating mb-3">
