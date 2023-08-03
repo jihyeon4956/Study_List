@@ -15,8 +15,6 @@
     <title>스파르타 피디아</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
-    <script src="prac.js"></script>
-    <script src="mise.js"></script>
 
     <style>
         * {
@@ -72,6 +70,8 @@
             margin: 20px auto 0px auto;
             padding: 20px;
             box-shadow: 0px 0px 3px 0px gray;
+
+            display: none;
         }
 
         .mybtns {
@@ -87,54 +87,90 @@
         }
     </style>
     <script>
-        $(document).ready(function() {
-            fetch("http://spartacodingclub.shop/sparta_api/weather/seoul").then(res => res.json()).then(data => {
+        $(document).ready(function(){
+          listing();
+        });
+
+        function listing() {
+            $('#cards-box').empty()
+            fetch('http://spartacodingclub.shop/web/api/movie')
+                .then(response => response.json())
+                .then(data => {
                     // console.log(data)
-                    let temp = data['temp']
-                    $('#temp').text(temp)
+                    let movies = data['movies']
+                    movies.forEach(movie => {
+                        //console.log(movie)
+                        let title = movie['title']
+                        let image = movie['image']
+                        let desc = movie['desc']
+                        let star = movie['star']
+                        let comment = movie['comment']
+
+                        let star_image = '⭐'.repeat(star)
+
+                        let temp_html = `<div class="col">
+                                            <div class="card h-100">
+                                                <img src="${image}"
+                                                     class="card-img-top">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${title}</h5>
+                                                    <p class="card-text">${desc}</p>
+                                                    <p>${star_image}</p>
+                                                    <p class="mycomment">${comment}</p>
+                                                </div>
+                                            </div>
+                                        </div>`
+
+                        $('#cards-box').append(temp_html)
+                    })
                 })
-        })
+        }
+
+        function open_box(){
+            $('#post-box').show()
+        }
+        function close_box(){
+            $('#post-box').hide()
+        }
     </script>
 </head>
 
 <body>
 <div class="mytitle">
     <h1>내 생애 최고의 영화들</h1>
-    <div>현재 서울의 날씨 : <span id="temp">20</span>도</div>
-    <button>영화 기록하기</button>
+    <button onclick="open_box()">영화 기록하기</button>
 </div>
-<div class="mypost">
+<div class="mypost" id="post-box">
     <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-        <label for="floatingInput">영화URL</label>
+        <input id="url" type="email" class="form-control" placeholder="name@example.com">
+        <label>영화URL</label>
     </div>
     <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
-        <select class="form-select" id="inputGroupSelect01">
-            <option selected>-- 선택하기 --</option>
+        <label class="input-group-text" for="inputGroupSmoviect01">별점</label>
+        <smoviect class="form-smoviect" id="star">
+            <option smoviected>-- 선택하기 --</option>
             <option value="1">⭐</option>
             <option value="2">⭐⭐</option>
             <option value="3">⭐⭐⭐</option>
             <option value="4">⭐⭐⭐⭐</option>
             <option value="5">⭐⭐⭐⭐⭐</option>
-        </select>
+        </smoviect>
     </div>
     <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-                  style="height: 100px"></textarea>
+        <textarea id="comment" class="form-control" placeholder="Leave a comment here"></textarea>
         <label for="floatingTextarea2">코멘트</label>
     </div>
     <div class="mybtns">
-        <button type="button" class="btn btn-dark">기록하기</button>
-        <button type="button" class="btn btn-outline-dark">닫기</button>
+        <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
+        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
     </div>
 </div>
 <div class="mycards">
-    <div class="row row-cols-1 row-cols-md-4 g-4">
+    <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
         <div class="col">
             <div class="card h-100">
                 <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
+                     class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">영화 제목이 들어갑니다</h5>
                     <p class="card-text">여기에 영화에 대한 설명이 들어갑니다.</p>
@@ -146,31 +182,7 @@
         <div class="col">
             <div class="card h-100">
                 <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">영화 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 영화에 대한 설명이 들어갑니다.</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">영화 제목이 들어갑니다</h5>
-                    <p class="card-text">여기에 영화에 대한 설명이 들어갑니다.</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycomment">나의 한줄 평을 씁니다</p>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card h-100">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
+                     class="card-img-top">
                 <div class="card-body">
                     <h5 class="card-title">영화 제목이 들어갑니다</h5>
                     <p class="card-text">여기에 영화에 대한 설명이 들어갑니다.</p>

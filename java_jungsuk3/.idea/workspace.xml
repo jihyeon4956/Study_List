@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jungsuk3/chap11/Ex11_5.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jungsuk3/chap11/Ex11_5.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/jungsuk3/chap11/Ex11_6.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/jungsuk3/chap11/Ex11_6.java" afterDir="false" />
     </list>
@@ -88,7 +89,7 @@
       <updated>1690919263153</updated>
       <workItem from="1690919264299" duration="330000" />
       <workItem from="1690919615581" duration="1280000" />
-      <workItem from="1690959636565" duration="742000" />
+      <workItem from="1690959636565" duration="1345000" />
     </task>
     <servers />
   </component>
