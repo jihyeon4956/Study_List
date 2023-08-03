@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Document</title>
+
+    <script>
+        // [GET]
+        // /test라고 하는 url에 요처을 해서 뭔가 데이터를 받아서 그걸 console에 찍자
+        fetch("/test").then(res => res.json()).then(data => {
+            console.log(data)
+        })
+        
+        // [POST]
+        let formData = new FormData();
+        formData.append("title_give", "블랙팬서");
+
+        fetch("/test", { method: "POST", body: formData }).then(res => res.json()).then(data => {
+            console.log(data)
+        })
+    </script>
+</head>
+
+<body>
+    <button onclick="hey()">나는 버튼!</button>
+</body>
+
+</html>
