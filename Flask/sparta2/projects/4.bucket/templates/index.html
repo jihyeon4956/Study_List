@@ -113,7 +113,9 @@
         let formData = new FormData();
         formData.append("bucket_give", bucket);
 
-        fetch('/bucket', {method: "POST", body: formData,}).then((res) => res.json()).then((data) => {
+        fetch('/bucket', {method: "POST", body: formData,})
+        .then((res) => res.json())
+        .then((data) => {
             alert(data["msg"]);
             window.location.reload();
           });
