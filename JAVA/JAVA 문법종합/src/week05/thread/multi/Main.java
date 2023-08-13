@@ -2,11 +2,17 @@ package week05.thread.multi;
 
 public class Main {
     public static void main(String[] args) {
+        // $와 *가 섞여서 나옴.
+        // 걸리는 시간이나 동작을 예측할 수가 없다.
+
+        //1st
         Runnable task = () -> {
             for (int i = 0; i < 100; i++) {
                 System.out.print("$");
             }
         };
+
+        //2nd
         Runnable task2 = () -> {
             for (int i = 0; i < 100; i++) {
                 System.out.print("*");
