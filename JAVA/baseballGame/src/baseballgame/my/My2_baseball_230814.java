@@ -17,6 +17,7 @@ public class My2_baseball_230814 {
                 comNum.add(random.nextInt(10));
             }
 
+
             System.out.println("컴퓨터 랜덤값: " + comNum); // 개발자 확인용
 
             System.out.println("컴퓨터가 숫자를 생성하였습니다. 답을 맞춰보세요!");
@@ -34,10 +35,7 @@ public class My2_baseball_230814 {
                         .toArray();
                 // Set을 배열로 변환
                 // .mapToInt : 결과값을 새로운 Int스트림으로 생성함
-//
-//                int[] comNumArray = comNum.stream()
-//                        .map(Integer::parseInt)
-//                        .toArray();
+
 
                 for (int i = 0; i < comNumArray.length; i++) {
                     if (comNum.contains(guess[i])) {
