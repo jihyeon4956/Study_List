@@ -1,4 +1,4 @@
-package com.sparta.springprepare_v1;
+package com.sparta.springprepare_v1.calculator;
 
 public class Calculator {
     public Double operate(double num1, String op, double num2) {
