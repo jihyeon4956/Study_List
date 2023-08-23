@@ -40,4 +40,38 @@ public class RequestController {
     public String helloPostRequestParam(@RequestParam String name, @RequestParam int age) {
         return String.format("Hello, @RequestParam.<br> name = %s, age = %d", name, age);
     }
+
+    // [Request sample]
+    // POST http://localhost:8080/hello/request/form/model
+    // Header
+    //  Content type: application/x-www-form-urlencoded
+    // Body
+    //  name=Robbie&age=95
+    // @ModelAttribute  : Body 부분에 들어온 쿼리 스트링 방식의 데이터를 객체에 mapping해서 가져올 수 있게 함
+    @PostMapping("/form/model")
+    @ResponseBody
+    public String helloRequestBodyForm(@ModelAttribute Star star) {
+        return String.format("Hello, @ModelAttribute.<br> (name = %s, age = %d) ", star.name, star.age);
+    }
+
+    // [Request sample]
+    // GET http://localhost:8080/hello/request/form/param/model?name=Robbie&age=95
+    @GetMapping("/form/param/model")
+    @ResponseBody
+    public String helloRequestParam(@ModelAttribute Star star) {
+        return String.format("Hello, @ModelAttribute.<br> (name = %s, age = %d) ", star.name, star.age);
+    }
+
+    // [Request sample]
+    // POST http://localhost:8080/hello/request/form/json
+    // Header
+    //  Content type: application/json
+    // Body
+    //  {"name":"Robbie","age":"95"}
+    // ★★ @RequestBody -> HTTP Body에 데이터가 넘어왔을 때 그 데이터를 처리할 수 있는 객체를 만들고 이 애노테이션을 꼭 붙인다
+    @PostMapping("/form/json")
+    @ResponseBody
+    public String helloPostRequestJson(@RequestBody Star star) {
+        return String.format("Hello, @RequestBody.<br> (name = %s, age = %d) ", star.name, star.age);
+    }
 }
