@@ -5,46 +5,35 @@ import com.sparta.memo.dto.MemoResponseDto;
 import com.sparta.memo.entity.Memo;
 import com.sparta.memo.repository.MemoRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Service;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 @Service
 public class MemoService {
-    private final JdbcTemplate jdbcTemplate;
+    private final MemoRepository memoRepository;
 
     public MemoService(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+        this.memoRepository = new MemoRepository(jdbcTemplate);
     }
 
     public MemoResponseDto createMemo(MemoRequestDto requestDto) {
         // RequestDto -> Entity
         Memo memo = new Memo(requestDto);
 
-        MemoRepository memoRepository = new MemoRepository(jdbcTemplate);
         Memo saveMemo = memoRepository.save(memo);
 
-
         // Entity -> ResponseDto
-        MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
-
-        return memoResponseDto;
+//        MemoResponseDto memoResponseDto = new MemoResponseDto(memo);
+//        return memoResponseDto;
+        return new MemoResponseDto(memo);
     }
 
     public List<MemoResponseDto> getMemos() {
-        MemoRepository memoRepository = new MemoRepository(jdbcTemplate);
         return memoRepository.findAll();
     }
 
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
-        MemoRepository memoRepository = new MemoRepository(jdbcTemplate);
 
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = memoRepository.findById(id);
@@ -57,7 +46,6 @@ public class MemoService {
     }
 
     public Long deleteMemo(Long id) {
-        MemoRepository memoRepository = new MemoRepository(jdbcTemplate);
 
         // 해당 메모가 DB에 존재하는지 확인
         Memo memo = memoRepository.findById(id);
