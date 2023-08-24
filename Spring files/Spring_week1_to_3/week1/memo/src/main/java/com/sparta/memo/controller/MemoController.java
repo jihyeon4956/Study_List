@@ -11,11 +11,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 public class MemoController {
+    // 현재 제어의 흐름이 Controller > Service > Repo로 직접생성임(new)
 
     private final MemoService memoService;
 
-    public MemoController(JdbcTemplate jdbcTemplate) {
-        this.memoService = new MemoService(jdbcTemplate);
+    public MemoController(MemoService memoService) {  // 만들어진 MemoServicd를 외부에서 파라미터로 전달 받아서 집어넣는다
+        this.memoService = memoService;
     }
 
     @PostMapping("/memos")
