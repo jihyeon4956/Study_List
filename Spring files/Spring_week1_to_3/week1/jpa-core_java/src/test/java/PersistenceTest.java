@@ -163,14 +163,11 @@ public class PersistenceTest {
         try {
             Memo memo = new Memo();
             memo.setId(4L);
-            memo.setUsername("Flush");
-            memo.setContents("Flush() 메서드 호출");
             em.persist(memo);
 
             System.out.println("flush() 전");
             em.flush(); // flush() 직접 호출
             System.out.println("flush() 후\n");
-
 
             System.out.println("트랜잭션 commit 전");
             et.commit();
