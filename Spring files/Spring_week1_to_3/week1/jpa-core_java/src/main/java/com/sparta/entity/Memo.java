@@ -1,5 +1,5 @@
 package com.sparta.entity;
-
+// 순수자바 - JPA 테스트용
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
