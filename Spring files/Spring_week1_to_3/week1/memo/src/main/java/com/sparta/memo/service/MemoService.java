@@ -27,9 +27,17 @@ public class MemoService {
         return new MemoResponseDto(memo);
     }
 
-    // 조회
+    // 일반조회
     public List<MemoResponseDto> getMemos() {
         return memoRepository.findAllByOrderByModifiedAtDesc()
+                .stream()
+                .map(MemoResponseDto::new)
+                .toList();
+    }
+
+    // 키워드 포함된 게시글만 조회
+    public List<MemoResponseDto> getMemosByKeyword(String keyword) {
+        return memoRepository.findAllByContentsContainsOrderByModifiedAtDesc(keyword)
                 .stream()
                 .map(MemoResponseDto::new)
                 .toList();

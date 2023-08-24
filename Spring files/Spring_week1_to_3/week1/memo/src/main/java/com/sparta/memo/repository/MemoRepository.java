@@ -22,4 +22,7 @@ public interface MemoRepository extends JpaRepository<Memo, Long> {
         // username이 쓴 글만 모두 가져오기
         // 파라미터로 username을 넣어줘야함
 
+        // 입력한 키워드가 포함된 게시글만 반환
+        List<Memo> findAllByContentsContainsOrderByModifiedAtDesc(String keyword);
+
 }

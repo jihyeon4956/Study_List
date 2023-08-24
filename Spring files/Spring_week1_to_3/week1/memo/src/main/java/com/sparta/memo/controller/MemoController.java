@@ -25,6 +25,12 @@ public class MemoController {
         return memoService.createMemo(requestDto); // 클라이언트에서 전달받은 data를 사용하라고 같이 보내줌
     }
 
+    // 입력한 키워드를 포함하는 게시글만 출력하기
+    @GetMapping("memos/contents")   // Request Param 형식임 ( =?)
+    public List<MemoResponseDto> getMemosByKeyword(String keyword){
+        return memoService.getMemosByKeyword(keyword);
+    }
+
     @GetMapping("/memos")
     public List<MemoResponseDto> getMemos() {
         return memoService.getMemos();
