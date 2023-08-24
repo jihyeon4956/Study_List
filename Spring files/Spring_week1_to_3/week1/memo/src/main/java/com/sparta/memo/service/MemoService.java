@@ -17,6 +17,7 @@ public class MemoService {
         this.memoRepository = memoRepository;
     }
 
+    // 생성
     public MemoResponseDto createMemo(MemoRequestDto requestDto) {
         // RequestDto -> Entity
         Memo memo = new Memo(requestDto);
@@ -26,10 +27,15 @@ public class MemoService {
         return new MemoResponseDto(memo);
     }
 
+    // 조회
     public List<MemoResponseDto> getMemos() {
-        return memoRepository.findAll().stream().map(MemoResponseDto::new).toList();
+        return memoRepository.findAllByOrderByModifiedAtDesc()
+                .stream()
+                .map(MemoResponseDto::new)
+                .toList();
     }
 
+    // 수정
     @Transactional
     public Long updateMemo(Long id, MemoRequestDto requestDto) {
 
@@ -42,6 +48,7 @@ public class MemoService {
         return id;
     }
 
+    // 삭제
     public Long deleteMemo(Long id) {
 
         // 해당 메모가 DB에 존재하는지 확인
@@ -52,7 +59,8 @@ public class MemoService {
 
     }
 
-    private Memo findMemo(Long id) {  // 값 찾는 작업이 중복이라 메서드로 빼줌
+    // 값 찾는 작업이 중복이라 메서드로 빼줌
+    private Memo findMemo(Long id) {
         return memoRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("선택한 메모는 존재하지 않습니다.")
         );
