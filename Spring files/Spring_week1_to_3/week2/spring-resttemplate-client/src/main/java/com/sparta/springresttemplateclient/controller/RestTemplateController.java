@@ -19,7 +19,7 @@ public class RestTemplateController {
         this.restTemplateService = restTemplateService;
     }
 
-    @GetMapping("/get-call-obj")
+    @GetMapping("/get-call-obj")    // http://localhost:8080/api/get-call-obj?query=Mac
     public ItemDto getCallObject(String query) {
         return restTemplateService.getCallObject(query);
     }
@@ -28,6 +28,7 @@ public class RestTemplateController {
     public List<ItemDto> getCallList() {
         return restTemplateService.getCallList();
     }
+
 
     @GetMapping("/post-call")
     public ItemDto postCall(String query) {
