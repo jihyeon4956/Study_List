@@ -36,18 +36,4 @@ public class UserController {
 
         return "redirect:/api/user/login-page";
     }
-
-    // 로그인히고 인증에 성공하면 쿠키에 토큰 담아서 주기
-    // 로그인하는 API요청을 받는 부분
-    @PostMapping("user/login") // 로그인할때 데이터가 넘어오니까 post
-    public String login(LoginRequestDto requestDto, HttpServletResponse res){
-        try {
-            userSerive.login(requestDto, res);
-        } catch (Exception e) {
-            return "redirect:/api/user/login-page?error";
-        }
-
-        return "redirect:/";
-    }
-
 }

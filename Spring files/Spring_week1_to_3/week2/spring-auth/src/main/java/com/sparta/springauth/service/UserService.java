@@ -62,23 +62,4 @@ public class UserService {
         User user = new User(username, password, email, role);
         userRepository.save(user);
     }
-
-    public void login(LoginRequestDto requestDto, HttpServletResponse res) {
-        String username = requestDto.getUsername();
-        String password = requestDto.getPassword();
-
-        // 사용자 확인 -> 받아온 값을 기준으로 DB에 존재하는지 일치여부 확인 필요
-        User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new IllegalArgumentException("등록된 사용자가 없습니다.")
-        );
-
-        // 비밀번호 확인
-        if(!passwordEncoder.matches(password, user.getPassword())) { // (평문, 암호문)
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다");
-        }
-
-        // 인증되었으니 JWT 생성 및 쿠키에 저장 후 Response 객체에 추가하기
-        String token = jwtUtil.createToken(user.getUsername(), user.getRole());   // 파라미터는 이름과 role이 필요한데 둘 다 DB에서 인증된 값으로 넣어준다
-        jwtUtil.addJwtToCookie(token, res);  // 위에서 생성된 토큰을 쿠키에 저장하는 메서드
-    }
 }
