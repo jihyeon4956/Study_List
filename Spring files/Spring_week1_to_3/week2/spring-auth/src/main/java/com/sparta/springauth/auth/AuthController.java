@@ -1,9 +1,13 @@
 package com.sparta.springauth.auth;
 
+import com.sparta.springauth.entity.UserRoleEnum;
+import com.sparta.springauth.jwt.JwtUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,10 +17,14 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 @RestController
+@RequiredArgsConstructor  // JWT 가져옴
 @RequestMapping("/api")
 public class AuthController {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
+
+    // JWT 가져오기
+    private final JwtUtil jwtUtil;
 
     @GetMapping("/create-cookie")
     public String createCookie(HttpServletResponse res) {
@@ -57,6 +65,39 @@ public class AuthController {
         return "getSession : " + value;
     }
 
+    // JWT 코드
+    @GetMapping("/create-jwt")
+    public String createJwt(HttpServletResponse res) {
+        // Jwt 생성
+        String token = jwtUtil.createToken("Robbie", UserRoleEnum.USER);
+
+        // 생성된 Jwt 쿠키 저장
+        jwtUtil.addJwtToCookie(token, res);
+
+        return "createJwt : " + token;
+    }
+
+    @GetMapping("/get-jwt")
+    public String getJwt(@CookieValue(JwtUtil.AUTHORIZATION_HEADER) String tokenValue) {
+        // JWT 토큰 substring (순수한 토큰)
+        String token = jwtUtil.substringToken(tokenValue);
+
+        // 토큰 검증
+        if(!jwtUtil.validateToken(token)){
+            throw new IllegalArgumentException("Token Error");
+        }
+
+        // 토큰에서 사용자 정보 가져오기
+        Claims info = jwtUtil.getUserInfoFromToken(token); // 토큰에서 getBody로 Claims를 가져오고 그걸 Claims로 받아줌
+        // 사용자 username
+        String username = info.getSubject();  // getSubject username 가져오는 메서드
+        System.out.println("username = " + username);
+        // 사용자 권한
+        String authority = (String) info.get(JwtUtil.AUTHORIZATION_KEY);   // 처음 생설할때 AUTHORIZATION_KEY 를 auth로 함
+        System.out.println("authority = " + authority);
+
+        return "getJwt : " + username + ", " + authority;
+    }
 
 
     // 쿠키를 저장하는 메소드
