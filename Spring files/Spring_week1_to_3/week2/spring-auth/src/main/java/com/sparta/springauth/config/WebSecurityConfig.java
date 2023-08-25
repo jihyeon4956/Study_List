@@ -1,7 +1,7 @@
 package com.sparta.springauth.config;
 
-import com.sparta.springauth.jwt.JwtAuthorizationFilter;
 import com.sparta.springauth.jwt.JwtAuthenticationFilter;
+import com.sparta.springauth.jwt.JwtAuthorizationFilter;
 import com.sparta.springauth.jwt.JwtUtil;
 import com.sparta.springauth.security.UserDetailsServiceImpl;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -18,6 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity // Spring Security 지원을 가능하게 함
+@EnableGlobalMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
     private final JwtUtil jwtUtil;
@@ -73,6 +74,13 @@ public class WebSecurityConfig {
         http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
         // UsernamePasswordAuthenticationFilter필터가 수행되기 전에 addFilterBefore를 실행하겠다는 의미
+
+        // 접근 불가 페이지 설정하기(권한이 없을때 보여주는 페이지)
+        http.exceptionHandling((exceptionHandling) ->
+                exceptionHandling
+                        .accessDeniedPage("/forbidden.html")
+        );
+
         return http.build();
     }
 }
