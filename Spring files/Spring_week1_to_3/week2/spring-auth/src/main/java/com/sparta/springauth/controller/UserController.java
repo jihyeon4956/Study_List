@@ -1,21 +1,13 @@
 package com.sparta.springauth.controller;
 
-import com.sparta.springauth.dto.LoginRequestDto;
 import com.sparta.springauth.dto.SignupRequestDto;
 import com.sparta.springauth.service.UserService;
-package com.sparta.springauth.controller;
-
-import com.sparta.springauth.dto.LoginRequestDto;
-import com.sparta.springauth.dto.SignupRequestDto;
-import com.sparta.springauth.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -59,3 +51,4 @@ public class UserController {
         return "redirect:/api/user/login-page";
     }
 }
+
