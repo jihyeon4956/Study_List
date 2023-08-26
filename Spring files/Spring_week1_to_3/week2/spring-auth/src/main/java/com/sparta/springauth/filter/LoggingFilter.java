@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Slf4j(topic = "LoggingFilter")  // 로그 찍을때 "LoggingFilter" 이름으로 찍힘
-@Component
+//@Component
 @Order(1)
 public class LoggingFilter implements Filter { // 필터 역할 수향하기 위해서 implements 함ㅡ dofliter메서드 오버라이딩
     @Override
