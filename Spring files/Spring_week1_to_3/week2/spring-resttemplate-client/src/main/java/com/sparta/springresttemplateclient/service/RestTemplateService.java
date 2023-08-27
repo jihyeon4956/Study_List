@@ -1,12 +1,14 @@
 package com.sparta.springresttemplateclient.service;
 
 import com.sparta.springresttemplateclient.dto.ItemDto;
+import com.sparta.springresttemplateclient.entity.User;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,9 +30,9 @@ public class RestTemplateService {
     public ItemDto getCallObject(String query) {
         // 요청 URL 만들기
         URI uri = UriComponentsBuilder
-                .fromUriString("http://localhost:7070")  // 서버 입장의 서버
-                .path("/api/server/get-call-obj")
-                .queryParam("query", query)  // 쿼리형식, Mac, IPad 등을 입력함
+                .fromUriString("http://localhost:7070")  // 서버 입장의 서버에 보낼준비
+                .path("/api/server/get-call-obj")  // 보내는 주소
+                .queryParam("query", query)  // query형식(=?), Mac, IPad 등을 입력함(동적으로 URI생성)
                 .encode()
                 .build()
                 .toUri();
@@ -64,10 +66,25 @@ public class RestTemplateService {
         return fromJSONtoItems(responseEntity.getBody());
     }
 
-
-
     public ItemDto postCall(String query) {
-        return null;
+        // 요청 URL 만들기
+        URI uri = UriComponentsBuilder
+                .fromUriString("http://localhost:7070")
+                .path("/api/server/post-call/{query}")  // @PathVariable 방식
+                .encode()
+                .build()
+                .expand(query)
+                .toUri();
+        log.info("uri = " + uri);
+
+        User user = new User("Robbie", "1234");
+
+        ResponseEntity<ItemDto> responseEntity = restTemplate.postForEntity(uri, user, ItemDto.class);
+        // postForEntity(uri, HttpBody에 넣어줄 테이더(user), 변환형태(ItemDto.class));
+
+        log.info("statusCode = " + responseEntity.getStatusCode());
+
+        return responseEntity.getBody();
     }
 
     public List<ItemDto> exchangeCall(String token) {
