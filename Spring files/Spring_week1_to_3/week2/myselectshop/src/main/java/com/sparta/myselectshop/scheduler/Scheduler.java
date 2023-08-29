@@ -23,9 +23,8 @@ public class Scheduler {
     private final ProductRepository productRepository;
 
     // 초, 분, 시, 일, 월, 주 순서
-//    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시, 우리가 지정한 특정 시간마다 메서드가 동작됨
+    @Scheduled(cron = "0 0 1 * * *") // 매일 새벽 1시, 우리가 지정한 특정 시간마다 메서드가 동작됨
                                     // @EnableScheduling 이것도 Application에 추가해줘야함
-    @Scheduled(cron = "*/10 * * * * *") // 테스트용 10초
     public void updatePrice() throws InterruptedException {
         log.info("가격 업데이트 실행");
         List<Product> productList = productRepository.findAll();
