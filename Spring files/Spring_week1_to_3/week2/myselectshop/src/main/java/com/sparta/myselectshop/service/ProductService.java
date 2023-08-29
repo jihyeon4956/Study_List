@@ -5,9 +5,14 @@ import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
 import com.sparta.myselectshop.entity.User;
+import com.sparta.myselectshop.entity.UserRoleEnum;
 import com.sparta.myselectshop.naver.dto.ItemDto;
 import com.sparta.myselectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -44,26 +49,37 @@ public class ProductService {
     }
 
     // 개인계정 본인 상품만 조회
-    public List<ProductResponseDto> getProducts(User user) {
-        List<Product> productList = productRepository.findAllByUser(user);
-        List<ProductResponseDto> responseDtoList = new ArrayList<>(); // 반환할 객체 미리 생성
+    public Page<ProductResponseDto> getProducts(User user, int page, int size, String sortBy, boolean isAsc) {
+        // 오름차순인지 내림차순인지 정의
+        Sort.Direction direction = isAsc? Sort.Direction.ASC: Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy); // 정렬기준: 방향, 항목
+        // 페이징
+        Pageable pageable = PageRequest.of(page, size, sort);
 
-        for (Product product : productList) {
-            responseDtoList.add(new ProductResponseDto(product));
+        // 관리자와 사용자 구분
+        UserRoleEnum userRoleEnum = user.getRole(); // 현재 로그인해서 요청한 유저의 Role정보를 알 수 있음
+
+        Page<Product> productList;  // page타입으로 감싸서 넘어옴
+
+        if(userRoleEnum == UserRoleEnum.USER) {
+            productList = productRepository.findAllByUser(user, pageable);
+        } else {
+            productList = productRepository.findAll(pageable);
         }
-        return responseDtoList;
+
+        return productList.map(ProductResponseDto::new);  // Page의 map 내장기능 활용
     }
 
-    // 관리자 계정 정체상품 조회
-    public List<ProductResponseDto> getAllProducts() {
-        List<Product> productList = productRepository.findAll();
-        List<ProductResponseDto> responseDtoList = new ArrayList<>(); // 반환할 객체 미리 생성
-
-        for (Product product : productList) {
-            responseDtoList.add(new ProductResponseDto(product));
-        }
-        return responseDtoList;
-    }
+//    // 관리자 계정 정체상품 조회
+//    public List<ProductResponseDto> getAllProducts() {
+//        List<Product> productList = productRepository.findAll();
+//        List<ProductResponseDto> responseDtoList = new ArrayList<>(); // 반환할 객체 미리 생성
+//
+//        for (Product product : productList) {
+//            responseDtoList.add(new ProductResponseDto(product));
+//        }
+//        return responseDtoList;
+//    }
 
     @Transactional
     public void updateBySearch(Long id, ItemDto itemDto) {
