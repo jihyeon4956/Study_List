@@ -21,7 +21,8 @@ public class User {
     // 영속성 전의를 사용해서 저장하려고 하는 연관된 Entity의 애노테이션에  cascade = CascadeType.PERSIST를 해주면 된다
 //    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)  // 영속성 전이 설정함
 //    @OneToMany(mappedBy = "user")
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST, orphanRemoval = true)  // false가 default임
     List<Food> foodList = new ArrayList<>();
 
     public void addFoodList(Food food) {
