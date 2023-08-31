@@ -46,6 +46,8 @@ public class ProductService {
         return new ProductResponseDto(product);
     }
 
+    @Transactional(readOnly = true)  // 성능 향상을 위해 옵션을 걸어줌
+    // 지연로딩 기능을 사용할거임 (productfolder에   @OneToMany(mappedBy = "product")에서 디폴트값)
     // 개인계정 본인 상품만 조회
     public Page<ProductResponseDto> getProducts(User user, int page, int size, String sortBy, boolean isAsc) {
         // 오름차순인지 내림차순인지 정의
