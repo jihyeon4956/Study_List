@@ -1,14 +1,12 @@
 package com.sparta.myselectshop.controller;
 
 import com.sparta.myselectshop.dto.FolderRequestDto;
+import com.sparta.myselectshop.dto.FolderResponseDto;
 import com.sparta.myselectshop.security.UserDetailsImpl;
 import com.sparta.myselectshop.service.FolderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +26,17 @@ public class FolderController {
 
         List<String> folderNames = folderRequestDto.getFolderNames();
         folderService.addFolders(folderNames, userDetails.getUser());
+    }
+
+    // 회원이 등록한 모든 폴더 조회 기능
+    // 회원의 정보를 받아와야함, JwtAuthrizationFilter를 구현해서 회원의 정보를 UserDetails에 담고
+    // 그 UserDetails는 Authentication이라는 인증객체 Principa 부분에 저장이 된다.
+    // 받아오는 방법은 @AuthenticationPrincipal 애너테이션을 사용한다
+    @GetMapping("/folders")
+    public List<FolderResponseDto> getFolders(@AuthenticationPrincipal UserDetailsImpl userDetails){
+        return folderService.getFolders(userDetails.getUser());
+        // folderService.getFolders()는 이미 구형되어 있는데 이는 UserController에서
+        // @GetMapping("/user-folder")에 유저의 폴더 정보를 조회해오는 기능을 추가할 때 FolderService에 만들어뒀고 폴더를 전체 조회하는 기능이다.
+        // 단, 조건은 Login한 유저
     }
 }

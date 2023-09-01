@@ -47,4 +47,15 @@ public class ProductController {
 //    public List<ProductResponseDto> getAllProducts() {
 //        return productService.getAllProducts();
 //    }
+
+    // 관심상품에 폴더 추가하기
+    @PostMapping("/products/{productId}/folder")
+    public void addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId, // Form 형식으로 폴더의 Id가 넘어옴
+            @AuthenticationPrincipal UserDetailsImpl userDetails // 상품에 폴더를 추가하는데 그 해당상품과 해당 폴더가 현재 로그인한 유저의 상품과 폴더가 맞는지 확인이 필요하다
+    ) {
+        productService.addFolder(productId, folderId, userDetails.getUser());
+    }
+
 }
