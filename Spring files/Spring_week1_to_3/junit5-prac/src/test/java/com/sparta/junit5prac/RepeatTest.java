@@ -18,5 +18,5 @@ public class RepeatTest {
     void parameterTest(int num) {
         System.out.println("5 * num = " + 5 * num);
     }
-    
+
 }

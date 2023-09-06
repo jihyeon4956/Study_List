@@ -78,16 +78,19 @@ public class UserController {
         return "index :: #fragment";
     }
 
-    @GetMapping("/user/kakao/callback")
-    public String kakaoLogin(@RequestParam String code,   // 카카오 서버에서 보내주는 인가코드(code)를 @RequestParam으로 받을 수 있다.
-                             HttpServletResponse res) throws JsonProcessingException {// 완료 후 쿠키생성 > jwt생성 후 넣어서 브라우저에 시킨다 (이전 회원가입은 header에 넣었음)
+    // 카카오 소셜로그인 - 인가코드 받는곳
+    @GetMapping("/user/kakao/callback") // 설정한 리다이렉트
+    public String kakaoLogin(@RequestParam String code,  // 카카오 서버에서 보내주는 인가코드(code)를 @RequestParam으로 받을 수 있다.
+                             HttpServletResponse response) throws JsonProcessingException {// 완료 후 쿠키생성 > jwt생성 후 넣어서 브라우저에 시킨다 (이전 회원가입은 header에 넣었음)
         // 카카오의 구조상 이 경우엔 직접 쿠키를 만들고 jwt를 넣은 다음에 브라우저에 자동으로 set될 수 있도록 구현함
-        String token = kakaoService.kakaoLogin(code);  // 반환되는게 JWT임
+        // code: 카카오 서버로부터 받은 인가 코드 Service 전달 후 인증 처리 및 JWT 반환
+        String token = kakaoService.kakaoLogin(code);// 반환되는게 JWT임
 
+        // Cookie 생성 및 직접 브라우저에 Set
         Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
         cookie.setPath("/");
-        res.addCookie(cookie);  // 자동으로 브라우저에 jwt값이 셋팅됨
+        response.addCookie(cookie); // 자동으로 브라우저에 jwt값이 셋팅됨
 
-        return "redirest:/";
+        return "redirect:/";
     }
 }

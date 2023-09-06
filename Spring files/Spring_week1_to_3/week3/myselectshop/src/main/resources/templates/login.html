@@ -16,10 +16,9 @@
 <body>
 <div id="login-form">
   <div id="login-title">Log into Select Shop</div>
-  <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=d12edefa4664d100ea56e623741a5d85&redirect_uri=http://localhost:8080/api/user/kakao/callback&response_type=code'">
+  <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=d12edefa4664d100ea56e623741a5d85&redirect_uri=http://localhost:8081/api/user/kakao/callback'">
     카카오로 로그인하기
   </button>
-
   <button id="login-id-btn" onclick="location.href='/api/user/signup'">
     회원 가입하기
   </button>

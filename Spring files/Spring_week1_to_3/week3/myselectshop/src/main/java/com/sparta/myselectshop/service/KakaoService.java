@@ -31,7 +31,7 @@ public class KakaoService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;   // RestTemplate Config 작성
     private final JwtUtil jwtUtil;
 
     public String kakaoLogin(String code) throws JsonProcessingException {
@@ -45,9 +45,9 @@ public class KakaoService {
         User kakaoUser = registerKakaoUserIfNeeded(kakaoUserInfo);
 
         // JWT 토큰 반환
-        String createToken = jwtUtil.createToken(kakaoUser.getUsername(), kakaoUser.getRole());
 
-        return createToken;  // 최종적으로는 토큰이 반환됨
+        return jwtUtil.createToken(kakaoUser.getUsername(), kakaoUser.getRole());  // 최종적으로는 토큰이 반환됨
+
     }
     private String getToken(String code) throws JsonProcessingException {
         log.info("인가코드: " + code);
@@ -67,7 +67,7 @@ public class KakaoService {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("grant_type", "authorization_code");
         body.add("client_id", "d12edefa4664d100ea56e623741a5d85");
-        body.add("redirect_uri", "http://localhost:8080/api/user/kakao/callback");
+        body.add("redirect_uri", "http://localhost:8081/api/user/kakao/callback");
         body.add("code", code);
 
         RequestEntity<MultiValueMap<String, String>> requestEntity = RequestEntity
