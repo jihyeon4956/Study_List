@@ -1,0 +1,21 @@
+# findAllByUserAndProductFolderList_FolderId SQL문으로 보기
+
+select
+    *
+from product p
+where p.user_id = 1;
+
+
+select
+    p.id,
+    p.title as product_title,
+    pf.product_id as product_id,
+    pf.folder_id as folder_id
+from
+    product p left join product_folder pf
+                        on p.id = pf.product_id
+where p.user_id = 7
+  and
+        pf.folder_id = 3
+order by p.id desc # 이무 조건을 안주면 정령은 기본 내리차순
+    limit 0, 10; # 10개만 한페이지
