@@ -34,7 +34,7 @@ public class KakaoService {
     private final RestTemplate restTemplate;
     private final JwtUtil jwtUtil;
 
-    public String kakaoLogin(String code, HttpServletResponse response) throws JsonProcessingException {
+    public String kakaoLogin(String code) throws JsonProcessingException {
         // 1. "인가 코드"로 "액세스 토큰" 요청
         String accessToken = getToken(code);
 
@@ -86,7 +86,7 @@ public class KakaoService {
         return jsonNode.get("access_token").asText();
     }
     private KakaoUserInfoDto getKakaoUserInfo(String accessToken) throws JsonProcessingException {
-        log.info("accessToken: " + accessToken);
+//        log.info("accessToken: " + accessToken);
 
         // 요청 URL 만들기
         URI uri = UriComponentsBuilder

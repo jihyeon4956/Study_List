@@ -84,7 +84,7 @@ public class UserController {
         // 카카오의 구조상 이 경우엔 직접 쿠키를 만들고 jwt를 넣은 다음에 브라우저에 자동으로 set될 수 있도록 구현함
         String token = kakaoService.kakaoLogin(code);  // 반환되는게 JWT임
 
-        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token);
+        Cookie cookie = new Cookie(JwtUtil.AUTHORIZATION_HEADER, token.substring(7));
         cookie.setPath("/");
         res.addCookie(cookie);  // 자동으로 브라우저에 jwt값이 셋팅됨
 

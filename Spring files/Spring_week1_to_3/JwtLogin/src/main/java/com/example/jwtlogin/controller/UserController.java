@@ -52,17 +52,17 @@ public class UserController {
     }
 
     // 유저 정보 수정
-    @PutMapping("/update/{userId}")
-    public StatusResponseDto update(@PathVariable Long userId,
+    @PutMapping("/update")
+    public StatusResponseDto update(
                                     @RequestBody UserUpdateRequestDto requestDto,
                                     HttpServletRequest req) {
-        return userService.updateUser(userId, requestDto, req);
+        return userService.updateUser( requestDto, req);
     }
 
     // 회원 탈퇴
-    @DeleteMapping("/delete/{userId}")
-    public StatusResponseDto delete(@PathVariable Long userId, HttpServletRequest req, HttpServletResponse res) {
-        return userService.deleteUser(userId, req, res);
+    @DeleteMapping("/delete")
+    public StatusResponseDto delete(HttpServletRequest req, HttpServletResponse res) {
+        return userService.deleteUser(req, res);
     }
 }
 

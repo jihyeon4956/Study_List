@@ -37,7 +37,7 @@ public class UserService {
             throw new IllegalArgumentException("중복된 사용자가 존재합니다.");
         }
 
-        User user = new User(username, password, requestDto.getEmail());
+        User user = new User(username, password, requestDto.getEmail(), requestDto.getNickname());
         userRepository.save(user);
         return new StatusResponseDto(String.valueOf(HttpStatus.OK), "회원가입 성공");
     }
@@ -61,32 +61,24 @@ public class UserService {
     }
 
     @Transactional
-    public StatusResponseDto updateUser(Long userId, UserUpdateRequestDto requestDto, HttpServletRequest req) {
+    public StatusResponseDto updateUser(UserUpdateRequestDto requestDto, HttpServletRequest req) {
         // 현재 로그인한 사용자 인증하기
         User loginUser = getAuthenticatedUser(req);
-        // 변경하려는 User 조회
-        User findUser = findUser(userId);
-
-        // 로그인한 사용자 == 변경하려는 사용자 유효성 검증
-        if (!loginUser.getUsername().equals(findUser.getUsername())) {
-            throw new IllegalArgumentException("작성자만 수정할 수 있습니다.");
-        }
+        String nickname = requestDto.getNickname();
         String password = passwordEncoder.encode(requestDto.getPassword());
-        findUser.update(requestDto, password);
+
+        loginUser.update(password, nickname);
+
+        userRepository.save(loginUser);
         return new StatusResponseDto(String.valueOf(HttpStatus.OK), "수정 성공!");
     }
 
-    public StatusResponseDto deleteUser(Long userId, HttpServletRequest req, HttpServletResponse res) {
+    public StatusResponseDto deleteUser( HttpServletRequest req, HttpServletResponse res) {
         User loginUser = getAuthenticatedUser(req);
 
-        User findUser = findUser(userId);
-
-        if (!loginUser.getUsername().equals(findUser.getUsername())) {
-            throw new IllegalArgumentException("회원 본인만 탈퇴할 수 있습니다.");
-        }
         // 쿠키에서 토큰 삭제
-        jwtUtil.deleteCookie(res, JwtUtil.AUTHORIZATION_HEADER);
         userRepository.delete(loginUser);
+        jwtUtil.deleteCookie(res, JwtUtil.AUTHORIZATION_HEADER);
         return new StatusResponseDto(String.valueOf(HttpStatus.OK), "탈퇴 완료");
     }
 

@@ -1,7 +1,7 @@
 package com.example.jwtlogin.entity;
 
-import com.example.jwtlogin.dto.UserUpdateRequestDto;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,16 +23,21 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
 
-    public User(String username, String password, String email) {
+    @Column(nullable = false)
+    private String nickname;
+
+
+    public User(String username, String password, String email, String nickname) {
         this.username = username;
         this.password = password;
         this.email = email;
+        this.nickname = nickname;
 
     }
 
-    public void update(UserUpdateRequestDto requestDto, String password) {
+    public void update(String password, String nickname) {
         this.password = password;
-        this.email = requestDto.getEmail();
+        this.nickname = nickname;
     }
 }
 
